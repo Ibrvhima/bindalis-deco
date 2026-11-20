@@ -1,0 +1,668 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='8' fill='%232D5A37'/><text x='50' y='74' font-size='62' text-anchor='middle' fill='%23F5F0E6' font-family='Georgia,serif' font-weight='400'>B</text></svg>" />
+  <title>Catalogue – BINDALIS · Meuble & Déco</title>
+  <meta name="description" content="Découvrez le catalogue Bindalis : meubles de salon, chambre, salle à manger et objets de décoration disponibles au showroom de Conakry. Pièces sélectionnées, prix en GNF." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Dancing+Script:wght@600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige:     '#EDE8DB',
+            cream:     '#F5F0E6',
+            brown:     '#1C1510',
+            'brown-light': '#6B6052',
+            'green-bindalis': '#2D5A37',
+            'green-hover':   '#245030',
+            gold:      '#B8921A',
+          },
+          fontFamily: {
+            serif:  ['Cormorant Garamond', 'Georgia', 'serif'],
+            script: ['Dancing Script', 'cursive'],
+            sans:   ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    body { background-color: #EDE8DB; font-family: 'DM Sans', sans-serif; color: #1C1510; }
+    .btn-primary {
+      background-color: #2D5A37; color: #fff;
+      padding: 0.6rem 1.25rem; font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; border-radius: 2px;
+      transition: background-color 0.2s; display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .btn-primary:hover { background-color: #245030; }
+    .btn-outline {
+      border: 1px solid #1C1510; color: #1C1510;
+      padding: 0.6rem 1.25rem; font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; border-radius: 2px;
+      transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .btn-outline:hover { background-color: #1C1510; color: #EDE8DB; }
+    .eyebrow { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+    .product-card:hover { box-shadow: 0 4px 20px rgba(28,21,16,0.1); transform: translateY(-2px); }
+    .product-card { transition: all 0.25s; }
+    /* Filtre actif */
+    .filter-active { background-color: #1C1510 !important; color: #EDE8DB !important; border-color: #1C1510 !important; }
+    /* Pill dispo */
+    .pill { border: 1px solid #c8bfb0; border-radius: 20px; padding: 0.35rem 0.9rem; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; }
+    .pill:hover { border-color: #1C1510; }
+    .pill.active { background-color: #1C1510; color: #EDE8DB; border-color: #1C1510; }
+  </style>
+</head>
+
+<body class="min-h-screen">
+  <!-- â•â•â• ICÃ”NES SVG RÃ‰UTILISABLES â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       Pour utiliser l'icÃ´ne WhatsApp n'importe oÃ¹ dans la page :
+       <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-wa"/></svg>
+       Modifier le path ici pour mettre Ã  jour toutes les occurrences.
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="icon-wa" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </symbol>
+  </svg>
+
+
+  <!-- HEADER -->
+  <header class="bg-beige border-b border-brown/10 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <a href="index.html">
+          <img src="assets/images/logo-bindalis.jpg" alt="Bindalis Meuble Déco" class="h-12 md:h-14 w-auto" />
+        </a>
+        <nav class="hidden md:flex items-center gap-7 text-[0.72rem] font-medium tracking-[0.12em] uppercase text-brown">
+          <a href="index.html" class="hover:text-gold transition-colors">Accueil</a>
+          <a href="catalogue.html" class="hover:text-gold transition-colors" style="text-decoration:underline;text-underline-offset:4px">Catalogue</a>
+          <a href="index.html#inspirations" class="hover:text-gold transition-colors">Inspirations</a>
+          <a href="index.html#a-propos" class="hover:text-gold transition-colors">À propos</a>
+          <a href="index.html#showroom" class="hover:text-gold transition-colors">Showroom & Contact</a>
+        </nav>
+        <a href="https://wa.me/224611537838" target="_blank" rel="noopener" class="hidden md:flex btn-primary text-[0.72rem] py-2 px-4 gap-2">
+          <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-wa"/></svg>
+          WhatsApp
+        </a>
+        <button id="burger-btn" class="md:hidden p-2 text-brown" aria-label="Menu" aria-expanded="false">
+          <span class="text-xl leading-none select-none">☰</span>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-beige border-t border-brown/10 px-4 pb-4">
+      <nav class="flex flex-col gap-4 pt-4 text-sm font-medium tracking-widest uppercase text-brown">
+        <a href="index.html" class="hover:text-gold transition-colors">Accueil</a>
+        <a href="catalogue.html" class="hover:text-gold transition-colors">Catalogue</a>
+        <a href="index.html#inspirations" class="hover:text-gold transition-colors">Inspirations</a>
+        <a href="index.html#a-propos" class="hover:text-gold transition-colors">À propos</a>
+        <a href="index.html#showroom" class="hover:text-gold transition-colors">Showroom & Contact</a>
+        <a href="https://wa.me/224611537838" target="_blank" rel="noopener" class="btn-primary w-fit mt-2 gap-2">
+          <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-wa"/></svg>
+          WhatsApp
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- BANNIÈRE CATALOGUE -->
+  <section class="bg-beige text-center py-14 md:py-20 border-b border-brown/10">
+    <span class="eyebrow text-gold mb-3 block">Notre collection</span>
+    <h1 class="font-serif text-5xl md:text-7xl italic font-light mb-3">Catalogue</h1>
+    <p class="font-script text-gold text-2xl mb-4">L'élégance qui transforme vos espaces.</p>
+    <p class="text-brown-light text-sm max-w-md mx-auto leading-relaxed px-4">
+      Le stock est mis à jour par notre équipe. Une pièce vous plaît ? Contactez-nous pour la réserver ou venez la voir au showroom.
+    </p>
+  </section>
+
+  <!-- CORPS : SIDEBAR + GRILLE -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-col lg:flex-row gap-8">
+
+      <!-- ——— SIDEBAR FILTRES ——— -->
+      <aside class="lg:w-56 flex-shrink-0">
+
+        <!-- Catégories -->
+        <div class="mb-8">
+          <h3 class="eyebrow text-brown mb-4">Catégories</h3>
+          <ul class="space-y-1 text-sm" id="cat-filters">
+            <li>
+              <button data-cat="tout" class="cat-btn w-full flex justify-between items-center px-3 py-2 rounded-sm text-left transition-colors filter-active">
+                <span>Tout</span><span class="text-xs font-medium">12</span>
+              </button>
+            </li>
+            <li>
+              <button data-cat="salon" class="cat-btn w-full flex justify-between items-center px-3 py-2 rounded-sm text-left transition-colors hover:bg-brown/5">
+                <span>Salon</span><span class="text-xs text-brown-light">5</span>
+              </button>
+            </li>
+            <li>
+              <button data-cat="chambre" class="cat-btn w-full flex justify-between items-center px-3 py-2 rounded-sm text-left transition-colors hover:bg-brown/5">
+                <span>Chambre</span><span class="text-xs text-brown-light">1</span>
+              </button>
+            </li>
+            <li>
+              <button data-cat="salle-a-manger" class="cat-btn w-full flex justify-between items-center px-3 py-2 rounded-sm text-left transition-colors hover:bg-brown/5">
+                <span>Salle à manger</span><span class="text-xs text-brown-light">1</span>
+              </button>
+            </li>
+            <li>
+              <button data-cat="decoration" class="cat-btn w-full flex justify-between items-center px-3 py-2 rounded-sm text-left transition-colors hover:bg-brown/5">
+                <span>Décoration</span><span class="text-xs text-brown-light">4</span>
+              </button>
+            </li>
+            <li>
+              <button data-cat="luminaires" class="cat-btn w-full flex justify-between items-center px-3 py-2 rounded-sm text-left transition-colors hover:bg-brown/5">
+                <span>Luminaires</span><span class="text-xs text-brown-light">1</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Disponibilité -->
+        <div class="mb-8">
+          <h3 class="eyebrow text-brown mb-4">Disponibilité</h3>
+          <div class="flex flex-wrap gap-2" id="dispo-filters">
+            <button class="pill active" data-dispo="tous">Tous</button>
+            <button class="pill" data-dispo="disponible">Disponible</button>
+            <button class="pill" data-dispo="stock-limite">Stock limité</button>
+            <button class="pill" data-dispo="sur-commande">Sur commande</button>
+            <button class="pill" data-dispo="epuise">Épuisé</button>
+          </div>
+        </div>
+
+        <!-- Bloc conseil -->
+        <div class="bg-cream border border-brown/10 rounded-sm p-5">
+          <h4 class="font-serif text-base font-light mb-2">Besoin d'un conseil ?</h4>
+          <p class="text-xs text-brown-light leading-relaxed mb-4">Notre équipe vous aide à choisir et vous confirme la disponibilité.</p>
+          <a href="https://wa.me/224611537838" target="_blank" rel="noopener" class="btn-primary text-[0.65rem] w-full justify-center gap-1.5">
+            <svg class="w-3.5 h-3.5" aria-hidden="true"><use href="#icon-wa"/></svg>
+            Écrire sur WhatsApp
+          </a>
+        </div>
+      </aside>
+
+      <!-- ——— GRILLE PRODUITS ——— -->
+      <main class="flex-1">
+
+        <!-- Barre de résultats + tri -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-brown/10">
+          <p class="text-sm text-brown-light">
+            <span id="result-count">12</span> produits · <span id="filter-label">Toutes catégories</span>
+          </p>
+          <div class="flex items-center gap-2">
+            <label for="tri-select" class="eyebrow text-xs text-brown-light">Trier par</label>
+            <select id="tri-select" class="text-sm border border-brown/20 bg-beige text-brown px-3 py-1.5 rounded-sm focus:outline-none focus:border-brown/40">
+              <option>Nouveautés</option>
+              <option>Prix croissant</option>
+              <option>Prix décroissant</option>
+              <option>Alphabétique</option>
+            </select>
+          </div>
+        </div>
+
+                <!--
+          â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+          COMMENT AJOUTER / MODIFIER UN PRODUIT
+          â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+          1. Copier un bloc <div class="product-card ..."> ... </div>
+          2. Adapter les attributs data-* :
+               data-cat   â†’ salon | chambre | salle-a-manger | decoration | luminaires
+               data-dispo â†’ disponible | stock-limite | sur-commande | epuise
+
+          3. Badge disponibilitÃ© (3 variantes) :
+               â— VERT  â†’ bg-green-bindalis + text-green-bindalis  "Disponible au showroom"
+               â— OR    â†’ bg-gold           + text-brown-light     "Stock limitÃ©"
+               â— GRIS  â†’ bg-brown-light/50 + text-brown-light     "Sur commande Â· 2â€“4 sem."
+
+          4. Lien DÃ©tails â†’ produit.html?p=SLUG
+             âš ï¸  Le slug doit exister dans PRODUITS (fichier produit.html)
+
+          5. Mettre Ã  jour le compteur dans la sidebar (ex: Salon <span>5</span>)
+          â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+        --><!-- Grille 3 colonnes -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5" id="products-grid">
+
+          <!-- Modèle de bouton réutilisé : SVG WhatsApp inline pour compatibilité -->
+
+          <!-- Produit 1 : Canapé 3 places -->
+          <div class="product-card bg-white overflow-hidden" data-cat="salon" data-dispo="disponible">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Salon</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-canape.jpg" alt="Canapé 3 places" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-bindalis flex-shrink-0"></span>
+                <span class="text-xs text-green-bindalis font-medium">Disponible au showroom</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Canapé 3 places</h3>
+              <p class="text-xs text-brown-light mb-1">Velours · métal · hêtre</p>
+              <p class="text-sm font-medium text-brown mb-3">4 500 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=canape-3-places" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 2 : Fauteuil cocon -->
+          <div class="product-card bg-white overflow-hidden" data-cat="salon" data-dispo="stock-limite">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Salon</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-fauteuil.webp" alt="Fauteuil cocon" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>
+                <span class="text-xs text-brown-light">Stock limité</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Fauteuil cocon</h3>
+              <p class="text-xs text-brown-light mb-1">Bouclette crème · pieds béton</p>
+              <p class="text-sm font-medium text-brown mb-3">1 500 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=fauteuil-cocon" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 3 : Table basse ronde -->
+          <div class="product-card bg-white overflow-hidden" data-cat="salon" data-dispo="sur-commande">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Salon</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-table-basse.jpg" alt="Table basse ronde" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-brown-light/50 flex-shrink-0"></span>
+                <span class="text-xs text-brown-light">Sur commande · 2 – 4 sem.</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Table basse ronde</h3>
+              <p class="text-xs text-brown-light mb-1">Marbre · métal doré</p>
+              <p class="text-sm font-medium text-brown mb-3">2 800 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=table-basse-ronde" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 4 : Lit tapissier 160 -->
+          <div class="product-card bg-white overflow-hidden" data-cat="chambre" data-dispo="disponible">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Chambre</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-lit.jpg" alt="Lit tapissier 160" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-bindalis flex-shrink-0"></span>
+                <span class="text-xs text-green-bindalis font-medium">Disponible au showroom</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Lit tapissier 160</h3>
+              <p class="text-xs text-brown-light mb-1">Tête de lit · capitons · bois caramel</p>
+              <p class="text-sm font-medium text-brown mb-3">3 500 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=lit-tapissier" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 5 : Ensemble salle à manger -->
+          <div class="product-card bg-white overflow-hidden" data-cat="salle-a-manger" data-dispo="sur-commande">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Salle à manger</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-salle-manger.jpg" alt="Ensemble salle à manger" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-brown-light/50 flex-shrink-0"></span>
+                <span class="text-xs text-brown-light">Sur commande · 2 – 4 sem.</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Ensemble salle à manger</h3>
+              <p class="text-xs text-brown-light mb-1">Table bois massif · 2 chaises</p>
+              <p class="text-sm font-medium text-brown mb-3">5 500 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=ensemble-salle-manger" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 6 : Miroir sol -->
+          <div class="product-card bg-white overflow-hidden" data-cat="decoration" data-dispo="sur-commande">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Décoration</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-miroir.jpg" alt="Miroir sol" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-brown-light/50 flex-shrink-0"></span>
+                <span class="text-xs text-brown-light">Sur commande · 2 – 4 sem.</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Miroir sol</h3>
+              <p class="text-xs text-brown-light mb-1">Nacre naturelle · Ø 80 cm</p>
+              <p class="text-sm font-medium text-brown mb-3">1 800 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=miroir-sol" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 7 : Table d'appoint -->
+          <div class="product-card bg-white overflow-hidden" data-cat="salon" data-dispo="disponible">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Salon</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-table.jpg" alt="Table d'appoint" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-bindalis flex-shrink-0"></span>
+                <span class="text-xs text-green-bindalis font-medium">Disponible au showroom</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Table d'appoint</h3>
+              <p class="text-xs text-brown-light mb-1">Noyer · pieds dorés</p>
+              <p class="text-sm font-medium text-brown mb-3">950 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=table-appoint" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 8 : Lampadaire arc -->
+          <div class="product-card bg-white overflow-hidden" data-cat="luminaires" data-dispo="sur-commande">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Luminaires</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-lampadaire.jpg" alt="Lampadaire arc" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-brown-light/50 flex-shrink-0"></span>
+                <span class="text-xs text-brown-light">Sur commande · 2 – 4 sem.</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Lampadaire arc</h3>
+              <p class="text-xs text-brown-light mb-1">Brossé doré · abat-jour lin</p>
+              <p class="text-sm font-medium text-brown mb-3">1 750 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=lampadaire-arc" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 9 : Coussin velours or -->
+          <div class="product-card bg-white overflow-hidden" data-cat="decoration" data-dispo="disponible">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Décoration</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-coussin.jpg" alt="Coussin velours or" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-bindalis flex-shrink-0"></span>
+                <span class="text-xs text-green-bindalis font-medium">Disponible au showroom</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Coussin velours or</h3>
+              <p class="text-xs text-brown-light mb-1">Velours côtelé · 45 × 45 cm</p>
+              <p class="text-sm font-medium text-brown mb-3">350 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=coussin-velours-or" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 10 : Tapis berbère -->
+          <div class="product-card bg-white overflow-hidden" data-cat="decoration" data-dispo="stock-limite">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Décoration</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-tapis.jpg" alt="Tapis berbère" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>
+                <span class="text-xs text-brown-light">Stock limité</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Tapis berbère</h3>
+              <p class="text-xs text-brown-light mb-1">Laine lavée main · 160 × 230</p>
+              <p class="text-sm font-medium text-brown mb-3">2 200 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=tapis-berbere" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 11 : Fauteuil cocon caramel -->
+          <div class="product-card bg-white overflow-hidden" data-cat="salon" data-dispo="sur-commande">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Salon</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-fauteuil-caramel.jpg" alt="Fauteuil cocon caramel" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-brown-light/50 flex-shrink-0"></span>
+                <span class="text-xs text-brown-light">Bientôt de retour</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Fauteuil cocon caramel</h3>
+              <p class="text-xs text-brown-light mb-1">Bouclette caramel · pieds béton</p>
+              <p class="text-sm font-medium text-brown mb-3">1 500 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=fauteuil-cocon-caramel" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Produit 12 : Console & accessoires -->
+          <div class="product-card bg-white overflow-hidden" data-cat="decoration" data-dispo="disponible">
+            <div class="px-3 pt-2.5">
+              <span class="eyebrow text-[0.58rem] text-brown-light tracking-[0.14em]">Décoration</span>
+            </div>
+            <div class="aspect-[4/3] overflow-hidden bg-beige">
+              <img src="assets/images/prod-console.jpg" alt="Console & accessoires" class="w-full h-full object-cover"
+                onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+            </div>
+            <div class="p-3 pt-2.5">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-bindalis flex-shrink-0"></span>
+                <span class="text-xs text-green-bindalis font-medium">Disponible au showroom</span>
+              </div>
+              <h3 class="font-serif text-sm font-light text-brown mb-0.5">Console & accessoires</h3>
+              <p class="text-xs text-brown-light mb-1">Noix · vase céramique</p>
+              <p class="text-sm font-medium text-brown mb-3">1 350 000 GNF</p>
+              <div class="flex gap-2">
+                <a href="produit.html?p=console-accessoires" class="btn-outline text-[0.65rem] py-2 px-3 flex-1 justify-center">Détails</a>
+                <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+                  class="btn-primary text-[0.65rem] py-2 px-3 flex-1 justify-center gap-1.5">
+                  <svg class="w-3 h-3 flex-shrink-0" aria-hidden="true"><use href="#icon-wa"/></svg>
+                  Demander
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /grille -->
+
+        <!-- Message aucun résultat -->
+        <div id="no-results" class="hidden text-center py-16 text-brown-light">
+          <p class="font-serif text-xl italic mb-2">Aucun produit trouvé</p>
+          <p class="text-sm">Essayez un autre filtre ou contactez-nous.</p>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-brown text-cream mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-10">
+        <div class="md:max-w-[220px]">
+          <p class="font-sans font-bold text-xl tracking-[0.18em] text-cream mb-1">BINDALIS</p>
+          <p class="font-script text-gold text-xl leading-tight">L'élégance qui transforme vos espaces.</p>
+        </div>
+        <nav class="flex flex-col gap-2 text-sm text-beige/70">
+          <a href="catalogue.html" class="hover:text-gold transition-colors">Catalogue</a>
+          <a href="index.html#a-propos" class="hover:text-gold transition-colors">Inspirations</a>
+          <a href="index.html#a-propos" class="hover:text-gold transition-colors">À propos</a>
+        </nav>
+        <nav class="flex flex-col gap-2 text-sm text-beige/70">
+          <a href="#" target="_blank" rel="noopener" class="hover:text-gold transition-colors">Facebook</a>
+          <a href="#" target="_blank" rel="noopener" class="hover:text-gold transition-colors">Instagram</a>
+          <a href="#" target="_blank" rel="noopener" class="hover:text-gold transition-colors">TikTok</a>
+        </nav>
+      </div>
+      <div class="border-t border-cream/10 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-beige/40">
+        <span>© 2026 Bindalis Meuble Déco · Conakry, Guinée</span>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-gold transition-colors">Mentions légales</a>
+          <a href="#" class="hover:text-gold transition-colors">Confidentialité</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ——— Burger mobile ——— */
+    const burgerBtn = document.getElementById('burger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    burgerBtn.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      burgerBtn.querySelector('span').textContent = isOpen ? '☰' : '✕';
+      burgerBtn.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    /* ——— Filtres catalogue ——— */
+    let currentCat = 'tout';
+    let currentDispo = 'tous';
+
+    function applyFilters() {
+      const cards = document.querySelectorAll('#products-grid [data-cat]');
+      let count = 0;
+      cards.forEach(card => {
+        const matchCat = currentCat === 'tout' || card.dataset.cat === currentCat;
+        const matchDispo = currentDispo === 'tous' || card.dataset.dispo === currentDispo;
+        const visible = matchCat && matchDispo;
+        card.style.display = visible ? '' : 'none';
+        if (visible) count++;
+      });
+      document.getElementById('result-count').textContent = count;
+      document.getElementById('no-results').classList.toggle('hidden', count > 0);
+    }
+
+    /* Filtres catégorie */
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('filter-active'));
+        btn.classList.add('filter-active');
+        currentCat = btn.dataset.cat;
+        const labels = { tout: 'Toutes catégories', salon: 'Salon', chambre: 'Chambre', 'salle-a-manger': 'Salle à manger', decoration: 'Décoration', luminaires: 'Luminaires' };
+        document.getElementById('filter-label').textContent = labels[currentCat] || 'Toutes catégories';
+        applyFilters();
+      });
+    });
+
+    /* Filtres disponibilité */
+    document.querySelectorAll('.pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentDispo = pill.dataset.dispo;
+        applyFilters();
+      });
+    });
+  </script>
+
+</body>
+</html>

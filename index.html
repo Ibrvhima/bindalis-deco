@@ -1,0 +1,714 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='8' fill='%232D5A37'/><text x='50' y='74' font-size='62' text-anchor='middle' fill='%23F5F0E6' font-family='Georgia,serif' font-weight='400'>B</text></svg>" />
+  <title>BINDALIS · Meuble & Déco</title>
+  <meta name="description" content="Bindalis – votre showroom de meubles et décoration à Conakry. Canapés, fauteuils, tables, luminaires et objets déco sélectionnés pour transformer vos espaces. Visitez-nous du lundi au samedi, 9h–18h." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts : Cormorant Garamond + Dancing Script + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Dancing+Script:wght@600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+
+  <script>
+    /* Configuration Tailwind : palette Bindalis */
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            beige:     '#EDE8DB',
+            cream:     '#F5F0E6',
+            brown:     '#1C1510',
+            'brown-light': '#6B6052',
+            'green-bindalis': '#2D5A37',
+            'green-hover':   '#245030',
+            gold:      '#B8921A',
+          },
+          fontFamily: {
+            serif:  ['Cormorant Garamond', 'Georgia', 'serif'],
+            script: ['Dancing Script', 'cursive'],
+            sans:   ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    /* Style de base */
+    body { background-color: #EDE8DB; font-family: 'DM Sans', sans-serif; color: #1C1510; }
+
+    /* Bouton primaire vert */
+    .btn-primary {
+      background-color: #2D5A37;
+      color: #fff;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background-color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover { background-color: #245030; }
+
+    /* Bouton outline */
+    .btn-outline {
+      border: 1px solid #1C1510;
+      color: #1C1510;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-outline:hover { background-color: #1C1510; color: #EDE8DB; }
+
+    /* Navigation underline actif */
+    nav a.active { text-decoration: underline; text-underline-offset: 4px; }
+
+    /* Overlay hero */
+    .hero-overlay { background: linear-gradient(to bottom, rgba(28,21,16,0.3) 0%, rgba(28,21,16,0.55) 100%); }
+
+    /* Eyebrow label */
+    .eyebrow { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+
+    /* Card produit hover */
+    .product-card:hover { box-shadow: 0 4px 20px rgba(28,21,16,0.1); transform: translateY(-2px); }
+    .product-card { transition: all 0.25s; }
+  </style>
+</head>
+
+<body class="min-h-screen">
+  <!-- â•â•â• ICÃ”NES SVG RÃ‰UTILISABLES â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       Pour utiliser l'icÃ´ne WhatsApp n'importe oÃ¹ dans la page :
+       <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-wa"/></svg>
+       Modifier le path ici pour mettre Ã  jour toutes les occurrences.
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="icon-wa" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </symbol>
+  </svg>
+
+
+  <!-- ===========================
+       HEADER (commun toutes pages)
+  =========================== -->
+  <header class="bg-beige border-b border-brown/10 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+
+        <!-- Logo -->
+        <a href="index.html">
+          <img src="assets/images/logo-bindalis.jpg" alt="Bindalis Meuble Déco" class="h-12 md:h-14 w-auto" />
+        </a>
+
+        <!-- Navigation desktop -->
+        <nav class="hidden md:flex items-center gap-7 text-[0.72rem] font-medium tracking-[0.12em] uppercase text-brown">
+          <a href="index.html" class="hover:text-gold transition-colors active">Accueil</a>
+          <a href="catalogue.html" class="hover:text-gold transition-colors">Catalogue</a>
+          <a href="#inspirations" class="hover:text-gold transition-colors">Inspirations</a>
+          <a href="#a-propos" class="hover:text-gold transition-colors">À propos</a>
+          <a href="#showroom" class="hover:text-gold transition-colors">Showroom & Contact</a>
+        </nav>
+
+        <!-- CTA WhatsApp desktop -->
+        <a href="https://wa.me/224611537838" target="_blank" rel="noopener" class="hidden md:flex btn-primary text-[0.72rem] py-2 px-4 gap-2">
+          <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-wa"/></svg>
+          WhatsApp
+        </a>
+
+        <!-- Menu burger mobile -->
+        <button id="burger-btn" class="md:hidden p-2 text-brown" aria-label="Menu" aria-expanded="false">
+          <span class="text-xl leading-none select-none">☰</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu mobile déroulant -->
+    <div id="mobile-menu" class="hidden md:hidden bg-beige border-t border-brown/10 px-4 pb-4">
+      <nav class="flex flex-col gap-4 pt-4 text-sm font-medium tracking-widest uppercase text-brown">
+        <a href="index.html" class="hover:text-gold transition-colors">Accueil</a>
+        <a href="catalogue.html" class="hover:text-gold transition-colors">Catalogue</a>
+        <a href="#inspirations" class="hover:text-gold transition-colors">Inspirations</a>
+        <a href="#a-propos" class="hover:text-gold transition-colors">À propos</a>
+        <a href="#showroom" class="hover:text-gold transition-colors">Showroom & Contact</a>
+        <a href="https://wa.me/224611537838" target="_blank" rel="noopener" class="btn-primary w-fit mt-2 gap-2">
+          <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-wa"/></svg>
+          WhatsApp
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===========================
+       HERO — Layout split 2 colonnes (maquette)
+  =========================== -->
+  <section class="bg-beige py-14 md:py-20 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+        <!-- Colonne gauche : texte -->
+        <div>
+          <span class="eyebrow text-gold mb-5 block tracking-[0.22em]">Mobilier &amp; Décoration à Conakry</span>
+          <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl italic font-light text-brown leading-[1.1] mb-5">
+            Des intérieurs qui<br />vous ressemblent
+          </h1>
+          <p class="font-script text-gold text-2xl md:text-3xl mb-6">L'élégance qui transforme vos espaces.</p>
+          <p class="text-brown-light text-sm leading-relaxed mb-8 max-w-md">
+            Découvrez nos meubles et objets de décoration, vérifiez leur disponibilité en ligne, puis venez les voir au showroom ou contactez-nous pour les réserver.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="catalogue.html"
+              class="inline-flex items-center justify-center px-7 py-3.5 bg-brown text-cream text-[0.78rem] font-medium tracking-[0.1em] uppercase hover:bg-brown/85 transition-colors">
+              Voir le catalogue
+            </a>
+            <a href="#showroom" class="btn-outline">Visiter le showroom</a>
+          </div>
+        </div>
+
+        <!-- Colonne droite : image avec décoration géométrique -->
+        <div class="relative mt-6 md:mt-0">
+          <!-- Cadre géométrique décoratif coin haut-droit -->
+          <div class="absolute -top-5 -right-3 md:-right-5 w-24 h-24 border-t-[1.5px] border-r-[1.5px] border-brown/20 pointer-events-none z-10"></div>
+          <div class="absolute -top-2 -right-1 md:-right-2 w-14 h-14 border-t border-r border-brown/12 pointer-events-none z-10"></div>
+
+          <!-- Image salon -->
+          <div class="rounded-sm overflow-hidden aspect-[4/3]">
+            <img
+              src="assets/images/hero-salon.jpg"
+              alt="Salon élégant Bindalis"
+              class="w-full h-full object-cover"
+              onerror="this.style.backgroundColor='#c8b89a';this.removeAttribute('src')"
+            />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       BANDE RÉASSURANCE — 4 colonnes
+  =========================== -->
+  <div class="bg-white border-y border-brown/8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-brown/8">
+
+        <div class="text-center py-6 px-4">
+          <p class="font-serif text-base md:text-lg font-light text-brown mb-1">Stock à jour</p>
+          <p class="text-xs text-brown-light leading-snug">Disponibilité affichée sur chaque produit</p>
+        </div>
+
+        <div class="text-center py-6 px-4">
+          <p class="font-serif text-base md:text-lg font-light text-brown mb-1">Showroom</p>
+          <p class="text-xs text-brown-light leading-snug">Voyez et touchez avant d'acheter</p>
+        </div>
+
+        <div class="text-center py-6 px-4">
+          <p class="font-serif text-base md:text-lg font-light text-brown mb-1">Conseil</p>
+          <p class="text-xs text-brown-light leading-snug">Une équipe pour vous accompagner</p>
+        </div>
+
+        <div class="text-center py-6 px-4">
+          <p class="font-serif text-base md:text-lg font-light text-brown mb-1">Livraison</p>
+          <p class="text-xs text-brown-light leading-snug">À Conakry et à l'intérieur du pays</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===========================
+       CATÉGORIES — 4 univers (maquette)
+  =========================== -->
+  <section class="bg-cream py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-12">
+        <span class="eyebrow text-gold mb-3 block tracking-[0.22em]">Nos univers</span>
+        <h2 class="font-serif text-4xl md:text-5xl font-light text-brown">Explorez par pièce</h2>
+      </div>
+
+      <!-- Grille 4 cartes : illustration + nom sous la carte -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+
+        <!-- Salon -->
+        <a href="catalogue.html?cat=salon" class="group block">
+          <div class="rounded-sm overflow-hidden aspect-[4/3] bg-beige mb-3 relative">
+            <img src="assets/images/cat-salon.jpg" alt="Salon" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+          </div>
+          <div class="flex items-baseline justify-between px-1">
+            <span class="font-serif text-xl md:text-2xl font-light text-brown">Salon</span>
+            <span class="text-xs text-gold font-medium">5 articles →</span>
+          </div>
+        </a>
+
+        <!-- Chambre -->
+        <a href="catalogue.html?cat=chambre" class="group block">
+          <div class="rounded-sm overflow-hidden aspect-[4/3] bg-beige mb-3 relative">
+            <img src="assets/images/cat-chambre.jpg" alt="Chambre" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              onerror="this.style.backgroundColor='#E8E0D0';this.removeAttribute('src')" />
+          </div>
+          <div class="flex items-baseline justify-between px-1">
+            <span class="font-serif text-xl md:text-2xl font-light text-brown">Chambre</span>
+            <span class="text-xs text-gold font-medium">1 article →</span>
+          </div>
+        </a>
+
+        <!-- Salle à manger -->
+        <a href="catalogue.html?cat=salle-a-manger" class="group block">
+          <div class="rounded-sm overflow-hidden aspect-[4/3] bg-beige mb-3 relative">
+            <img src="assets/images/cat-salle-manger.jpg" alt="Salle à manger" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              onerror="this.style.backgroundColor='#EAE2D2';this.removeAttribute('src')" />
+          </div>
+          <div class="flex items-baseline justify-between px-1">
+            <span class="font-serif text-xl md:text-2xl font-light text-brown">Salle à manger</span>
+            <span class="text-xs text-gold font-medium">1 article →</span>
+          </div>
+        </a>
+
+        <!-- Décoration -->
+        <a href="catalogue.html?cat=decoration" class="group block">
+          <div class="rounded-sm overflow-hidden aspect-[4/3] bg-beige mb-3 relative">
+            <img src="assets/images/cat-deco.jpg" alt="Décoration" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              onerror="this.style.backgroundColor='#E6DDD0';this.removeAttribute('src')" />
+          </div>
+          <div class="flex items-baseline justify-between px-1">
+            <span class="font-serif text-xl md:text-2xl font-light text-brown">Décoration</span>
+            <span class="text-xs text-gold font-medium">5 articles →</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       NOUVEAUTÉS AU SHOWROOM
+  =========================== -->
+  <section class="bg-beige py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- En-tête section : titre gauche, lien droite -->
+      <div class="flex items-end justify-between mb-10">
+        <div>
+          <span class="eyebrow text-gold mb-3 block tracking-[0.22em]">Arrivages récents</span>
+          <h2 class="font-serif text-3xl md:text-5xl font-light text-brown">Nouveautés au showroom</h2>
+        </div>
+        <a href="catalogue.html" class="hidden sm:inline-flex items-center gap-1 text-[0.72rem] font-medium tracking-[0.1em] uppercase text-brown underline underline-offset-4 hover:text-gold transition-colors whitespace-nowrap">
+          Tout le catalogue →
+        </a>
+      </div>
+
+      <!-- Grille 4 cartes -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- Carte 1 : Canapé 3 places -->
+        <div class="product-card rounded-sm overflow-hidden">
+          <!-- Zone image beige -->
+          <div class="aspect-[4/3] overflow-hidden bg-beige">
+            <img src="assets/images/prod-canape.jpg" alt="Canapé 3 places"
+              class="w-full h-full object-cover transition-transform duration-500"
+              onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+          </div>
+          <!-- Zone infos blanche -->
+          <div class="bg-white px-4 pt-4 pb-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full bg-green-bindalis inline-block flex-shrink-0"></span>
+              <span class="text-xs text-green-bindalis font-medium">Disponible au showroom</span>
+            </div>
+            <h3 class="font-serif text-lg font-light text-brown mb-0.5">Canapé 3 places</h3>
+            <p class="text-xs text-brown-light mb-1">Velours · bois de hêtre</p>
+            <p class="text-base font-medium text-brown mb-4">4 500 000 GNF</p>
+            <a href="produit.html?p=canape-3-places"
+              class="block w-full text-center border border-brown text-brown text-[0.72rem] font-medium tracking-[0.1em] uppercase py-2.5 hover:bg-brown hover:text-cream transition-colors">
+              Voir le produit
+            </a>
+          </div>
+        </div>
+
+        <!-- Carte 2 : Fauteuil cocon -->
+        <div class="product-card rounded-sm overflow-hidden">
+          <div class="aspect-[4/3] overflow-hidden bg-beige">
+            <img src="assets/images/prod-fauteuil.webp" alt="Fauteuil cocon"
+              class="w-full h-full object-cover transition-transform duration-500"
+              onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+          </div>
+          <div class="bg-white px-4 pt-4 pb-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full bg-gold inline-block flex-shrink-0"></span>
+              <span class="text-xs text-gold font-medium">Plus que 2 pièces</span>
+            </div>
+            <h3 class="font-serif text-lg font-light text-brown mb-0.5">Fauteuil cocon</h3>
+            <p class="text-xs text-brown-light mb-1">Bouclette · pieds laiton</p>
+            <p class="text-base font-medium text-brown mb-4">1 500 000 GNF</p>
+            <a href="produit.html?p=fauteuil-cocon"
+              class="block w-full text-center border border-brown text-brown text-[0.72rem] font-medium tracking-[0.1em] uppercase py-2.5 hover:bg-brown hover:text-cream transition-colors">
+              Voir le produit
+            </a>
+          </div>
+        </div>
+
+        <!-- Carte 3 : Table basse ronde -->
+        <div class="product-card rounded-sm overflow-hidden">
+          <div class="aspect-[4/3] overflow-hidden bg-beige">
+            <img src="assets/images/prod-table-basse.jpg" alt="Table basse ronde"
+              class="w-full h-full object-cover transition-transform duration-500"
+              onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+          </div>
+          <div class="bg-white px-4 pt-4 pb-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full bg-brown-light/50 inline-block flex-shrink-0"></span>
+              <span class="text-xs text-brown-light font-medium">Sur commande · 2 – 4 sem.</span>
+            </div>
+            <h3 class="font-serif text-lg font-light text-brown mb-0.5">Table basse ronde</h3>
+            <p class="text-xs text-brown-light mb-1">Bois massif · métal noir</p>
+            <p class="text-base font-medium text-brown mb-4">2 800 000 GNF</p>
+            <a href="produit.html?p=table-basse-ronde"
+              class="block w-full text-center border border-brown text-brown text-[0.72rem] font-medium tracking-[0.1em] uppercase py-2.5 hover:bg-brown hover:text-cream transition-colors">
+              Voir le produit
+            </a>
+          </div>
+        </div>
+
+        <!-- Carte 4 : Miroir soleil -->
+        <div class="product-card rounded-sm overflow-hidden">
+          <div class="aspect-[4/3] overflow-hidden bg-beige">
+            <img src="assets/images/prod-miroir.jpg" alt="Miroir soleil"
+              class="w-full h-full object-cover transition-transform duration-500"
+              onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+          </div>
+          <div class="bg-white px-4 pt-4 pb-5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full bg-green-bindalis inline-block flex-shrink-0"></span>
+              <span class="text-xs text-green-bindalis font-medium">Disponible au showroom</span>
+            </div>
+            <h3 class="font-serif text-lg font-light text-brown mb-0.5">Miroir rotin</h3>
+            <p class="text-xs text-brown-light mb-1">Rotin naturel</p>
+            <p class="text-base font-medium text-brown mb-4">1 800 000 GNF</p>
+            <a href="produit.html?p=miroir-sol"
+              class="block w-full text-center border border-brown text-brown text-[0.72rem] font-medium tracking-[0.1em] uppercase py-2.5 hover:bg-brown hover:text-cream transition-colors">
+              Voir le produit
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lien mobile uniquement -->
+      <div class="sm:hidden text-center mt-8">
+        <a href="catalogue.html" class="text-[0.72rem] font-medium tracking-[0.1em] uppercase text-brown underline underline-offset-4">
+          Tout le catalogue →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===========================
+       COMMENT ACHETER — fond brun
+  =========================== -->
+  <section class="bg-brown py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+      <span class="eyebrow text-gold mb-4 block tracking-[0.25em]">Simple et sans engagement</span>
+      <h2 class="font-serif text-3xl md:text-5xl font-light text-cream mb-14">Comment acheter chez Bindalis ?</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6">
+
+        <!-- Étape I -->
+        <div class="flex flex-col items-center">
+          <span class="font-serif text-5xl md:text-6xl font-light text-gold mb-4 leading-none">I</span>
+          <h3 class="font-serif text-xl font-light text-cream mb-3">Choisissez</h3>
+          <p class="text-beige/60 text-sm leading-relaxed max-w-xs mx-auto">
+            Parcourez le catalogue et vérifiez la disponibilité de chaque pièce.
+          </p>
+        </div>
+
+        <!-- Étape II -->
+        <div class="flex flex-col items-center">
+          <span class="font-serif text-5xl md:text-6xl font-light text-gold mb-4 leading-none">II</span>
+          <h3 class="font-serif text-xl font-light text-cream mb-3">Contactez-nous</h3>
+          <p class="text-beige/60 text-sm leading-relaxed max-w-xs mx-auto">
+            Un clic sur WhatsApp ou un appel : nous confirmons le stock et le prix.
+          </p>
+        </div>
+
+        <!-- Étape III -->
+        <div class="flex flex-col items-center">
+          <span class="font-serif text-5xl md:text-6xl font-light text-gold mb-4 leading-none">III</span>
+          <h3 class="font-serif text-xl font-light text-cream mb-3">Récupérez</h3>
+          <p class="text-beige/60 text-sm leading-relaxed max-w-xs mx-auto">
+            Retrait au showroom ou livraison à domicile, selon votre préférence.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       LA MAISON BINDALIS — split beige
+  =========================== -->
+  <section id="a-propos" class="bg-beige py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+        <!-- Image de marque gauche -->
+        <div class="rounded-sm overflow-hidden aspect-[4/3] bg-[#f0e8d8] flex items-center justify-center">
+          <img src="assets/images/bindalis-brand.jpg" alt="La Maison Bindalis"
+            class="w-full h-full object-cover"
+            onerror="this.style.display='none'" />
+          <!-- Fallback visuel si image absente -->
+          <div class="text-center px-10 py-12 w-full h-full flex flex-col items-center justify-center"
+               style="background: linear-gradient(135deg, #f5edde 0%, #ede0c8 100%);">
+            <img src="assets/images/logo-bindalis.jpg" alt="Bindalis" class="max-w-[220px] w-full" />
+          </div>
+        </div>
+
+        <!-- Texte droite -->
+        <div>
+          <span class="eyebrow text-gold mb-4 block tracking-[0.22em]">La Maison Bindalis</span>
+          <h2 class="font-serif text-3xl md:text-5xl font-light text-brown leading-tight mb-6">
+            Le goût du beau,<br />au quotidien
+          </h2>
+          <p class="text-brown-light text-sm leading-relaxed mb-8">
+            Bindalis est né d'une vision simple : offrir à Conakry des intérieurs qui inspirent. Nous sélectionnons avec soin chaque meuble et chaque objet pour créer des espaces à la fois élégants et chaleureux, à l'image de ceux qui les habitent. Notre showroom vous accueille pour voir, toucher et imaginer votre espace avant de vous décider.
+          </p>
+          <a href="#showroom"
+            class="inline-flex items-center gap-1 text-[0.72rem] font-medium tracking-[0.1em] uppercase text-brown underline underline-offset-4 hover:text-gold transition-colors">
+            Notre histoire →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       INSPIRATIONS
+  =========================== -->
+  <section id="inspirations" class="bg-cream py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="text-center mb-12">
+        <span class="eyebrow text-gold mb-3 block tracking-[0.22em]">Inspirations</span>
+        <h2 class="font-serif text-4xl md:text-5xl font-light text-brown">Des espaces qui inspirent</h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+
+        <div class="aspect-[4/3] overflow-hidden rounded-sm">
+          <img src="assets/images/insp-1.jpg" alt="Chambre luxueuse"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            onerror="this.style.backgroundColor='#EDE8DB';this.removeAttribute('src')" />
+        </div>
+
+        <div class="aspect-[4/3] overflow-hidden rounded-sm">
+          <img src="assets/images/insp-2.jpg" alt="Fauteuils cocon"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            onerror="this.style.backgroundColor='#E8E0D0';this.removeAttribute('src')" />
+        </div>
+
+        <div class="aspect-[4/3] overflow-hidden rounded-sm">
+          <img src="assets/images/insp-3.jpg" alt="Salon naturel"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            onerror="this.style.backgroundColor='#EAE2D2';this.removeAttribute('src')" />
+        </div>
+
+        <div class="aspect-[4/3] overflow-hidden rounded-sm">
+          <img src="assets/images/insp-4.jpg" alt="Chambre moderne"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            onerror="this.style.backgroundColor='#E6DDD0';this.removeAttribute('src')" />
+        </div>
+
+      </div>
+
+      <div class="text-center mt-10">
+        <a href="catalogue.html"
+          class="inline-flex items-center gap-1 text-[0.72rem] font-medium tracking-[0.1em] uppercase text-brown underline underline-offset-4 hover:text-gold transition-colors">
+          Voir tous nos produits →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===========================
+       SHOWROOM & CONTACT
+  =========================== -->
+  <section id="showroom" class="bg-cream py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-start">
+
+        <!-- Colonne gauche : infos -->
+        <div>
+          <span class="eyebrow text-gold mb-4 block tracking-[0.25em]">Venez nous rencontrer</span>
+          <h2 class="font-serif text-4xl md:text-5xl font-light text-brown mb-10">Notre showroom</h2>
+
+          <!-- Adresse -->
+          <div class="mb-6">
+            <p class="eyebrow text-brown text-[0.65rem] tracking-[0.18em] mb-1">Adresse</p>
+            <p class="text-brown-light text-sm">Conakry, Guinée</p>
+          </div>
+
+          <!-- Horaires -->
+          <div class="mb-6">
+            <p class="eyebrow text-brown text-[0.65rem] tracking-[0.18em] mb-1">Horaires</p>
+            <p class="text-brown-light text-sm">Lundi – Samedi : 9h – 18h</p>
+            <p class="text-brown-light text-sm">Dimanche : fermé</p>
+          </div>
+
+          <!-- Contact -->
+          <div class="mb-8">
+            <p class="eyebrow text-brown text-[0.65rem] tracking-[0.18em] mb-1">Contact</p>
+            <p class="text-brown-light text-sm">Tél. / WhatsApp : +224 611 537 838</p>
+            <p class="text-brown-light text-sm">E-mail : bindalis@deco.com</p>
+          </div>
+
+          <!-- Boutons d'action -->
+          <div class="flex flex-wrap gap-3">
+            <a href="https://wa.me/224611537838" target="_blank" rel="noopener"
+              class="inline-flex items-center gap-2 px-5 py-2.5 bg-green-bindalis text-cream text-[0.72rem] font-medium tracking-[0.08em] uppercase hover:bg-green-hover transition-colors">
+              <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-wa"/></svg>
+              Écrire sur WhatsApp
+            </a>
+            <a href="tel:+224611537838"
+              class="inline-flex items-center gap-2 px-5 py-2.5 bg-brown text-cream text-[0.72rem] font-medium tracking-[0.08em] uppercase hover:bg-brown/85 transition-colors">
+              <!-- Icône téléphone SVG inline -->
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+              </svg>
+              Appeler
+            </a>
+            <a href="https://www.google.com/maps?q=9.5370,-13.6773" target="_blank" rel="noopener"
+              class="inline-flex items-center gap-2 px-5 py-2.5 border border-brown text-brown text-[0.72rem] font-medium tracking-[0.08em] uppercase hover:bg-brown hover:text-cream transition-colors">
+              Itinéraire
+            </a>
+          </div>
+        </div>
+
+        <!-- Colonne droite : carte Leaflet -->
+        <div id="map-showroom" class="rounded-sm overflow-hidden h-64 md:h-[400px] w-full border border-brown/10"></div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       FOOTER (commun toutes pages)
+  =========================== -->
+  <footer class="bg-brown text-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
+
+      <!-- Grille principale : logo | nav | réseaux -->
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-10">
+
+        <!-- Logo + baseline -->
+        <div class="md:max-w-[220px]">
+          <p class="font-sans font-bold text-xl tracking-[0.18em] text-cream mb-1">BINDALIS</p>
+          <p class="font-script text-gold text-xl leading-tight">L'élégance qui transforme vos espaces.</p>
+        </div>
+
+        <!-- Navigation centrale -->
+        <nav class="flex flex-col gap-2 text-sm text-beige/70">
+          <a href="catalogue.html" class="hover:text-gold transition-colors">Catalogue</a>
+          <a href="#inspirations" class="hover:text-gold transition-colors">Inspirations</a>
+          <a href="#a-propos" class="hover:text-gold transition-colors">À propos</a>
+        </nav>
+
+        <!-- Réseaux sociaux -->
+        <nav class="flex flex-col gap-2 text-sm text-beige/70">
+          <a href="#" target="_blank" rel="noopener" class="hover:text-gold transition-colors">Facebook</a>
+          <a href="#" target="_blank" rel="noopener" class="hover:text-gold transition-colors">Instagram</a>
+          <a href="#" target="_blank" rel="noopener" class="hover:text-gold transition-colors">TikTok</a>
+        </nav>
+
+      </div>
+
+      <!-- Bas de footer -->
+      <div class="border-t border-cream/10 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-beige/40">
+        <span>© 2026 Bindalis Meuble Déco · Conakry, Guinée</span>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-gold transition-colors">Mentions légales</a>
+          <a href="#" class="hover:text-gold transition-colors">Confidentialité</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ===========================
+       Script burger menu mobile
+  =========================== -->
+  <script>
+    const burgerBtn = document.getElementById('burger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    burgerBtn.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      burgerBtn.querySelector('span').textContent = isOpen ? '☰' : '✕';
+      burgerBtn.setAttribute('aria-expanded', String(!isOpen));
+    });
+  </script>
+
+  <!-- Leaflet JS + initialisation carte showroom -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script>
+    (function () {
+      /* Coordonnées du showroom Bindalis — Conakry, Guinée */
+      var LAT = 9.5370, LNG = -13.6773;
+
+      var map = L.map('map-showroom', {
+        center: [LAT, LNG],
+        zoom: 14,
+        scrollWheelZoom: false,
+        attributionControl: true
+      });
+
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 16,
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+      }).addTo(map);
+
+      /* Marqueur personnalisé aux couleurs Bindalis */
+      var markerIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:36px;height:36px;border-radius:50% 50% 50% 0;background:#2D5A37;border:3px solid #F5F0E6;box-shadow:0 2px 8px rgba(0,0,0,.3);transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;"><span style="transform:rotate(45deg);color:#F5F0E6;font-family:Georgia,serif;font-size:14px;font-weight:600;display:block;text-align:center;line-height:30px;width:100%;">B</span></div>',
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        popupAnchor: [0, -38]
+      });
+
+      L.marker([LAT, LNG], { icon: markerIcon })
+        .addTo(map)
+        .bindPopup(
+          '<strong style="font-family:Georgia,serif;color:#1C1510;font-size:13px;">BINDALIS</strong><br>' +
+          '<span style="font-size:11px;color:#6B6052;">Showroom Meubles & Déco<br>Conakry, Guinée</span>'
+        )
+        .openPopup();
+    })();
+  </script>
+
+</body>
+</html>
